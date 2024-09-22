@@ -35,7 +35,7 @@
         sudo apt-get install jenkins
      ```
 
-### Start Jenkins
+####  Start Jenkins
  
 **You can enable the Jenkins service to start at boot with the command:**
    - enable Jenkins :
@@ -54,3 +54,83 @@
      ```bash
       sudo systemctl status jenkins
      ```
+
+### Nginx installation and configuration 
+**Step 1: steps to install nginx and start**
+**install Nginx**
+    - Go to Ubuntu system on AWS , Install Nginx 
+
+1. **Install nginx**
+   - Install nginx Ubuntu :
+     ```bash
+     sudo apt-get install nginx -y
+     ```
+2. **Enable nginx**
+   - Enable nginx Ubuntu :
+     ```bash
+     sudo systemctl enable nginx
+     ```
+3. **check status of nginx**
+   - checking status of nginx :
+     ```bash
+     sudo systemctl status nginx
+     ```
+4. **start nginx**
+   - start nginx Ubuntu :
+     ```bash
+     sudo systemctl start nginx
+     ```
+
+### Create a New Configuration File for Jenkins
+
+1. **Creating  a new configuration file for Jenkins**
+   - Navigate to the Nginx Configuration Directory: :
+     ```bash
+        cd /etc/nginx/sites-available/
+        ##Create a New Configuration File for Jenkins: Instead of modifying the default configuration, create a separate file (e.g., jenkins.conf):
+        sudo vi /etc/nginx/sites-available/jenkins.conf
+        ## Add the Jenkins Reverse Proxy Configuration: In the jenkins.conf file, add the reverse proxy configuration for Jenkins. Make sure to replace jenkins.yourdomain.com with your cloud DNS URL:
+        
+        server {
+            listen 80;
+            server_name jenkins.yourdomain.com;
+
+            location / {
+                proxy_pass http://localhost:8080;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+
+            client_max_body_size 1G;
+            proxy_buffering off;
+        }
+
+        ## Save and Exit the File: Save the changes and exit the file.**
+
+     ```
+
+2. **Enable the New Configuration**
+   - Create a Symlink to sites-enabled: To enable this configuration, create a symlink from the      sites-available directory to the sites-enabled directory: :
+     ```bash
+        sudo ln -s /etc/nginx/sites-available/jenkins.conf /etc/nginx/sites-enabled/
+        # Ensure Both Configurations Are Active: You should now have two configuration files, one for your default site and one for Jenkins:
+        /etc/nginx/sites-available/default (or the existing configuration)
+        /etc/nginx/sites-available/jenkins.conf
+        # Make sure the symlinks in sites-enabled point to both files:
+        ls -l /etc/nginx/sites-enabled/
+        # You should see:
+        # default -> /etc/nginx/sites-available/default
+        # jenkins.conf -> /etc/nginx/sites-available/jenkins.conf
+     ```
+
+
+3. **Check and Restart Nginx**
+   - Test Nginx Configuration: Before restarting, verify that your Nginx configuration is valid: :
+     ```bash
+        sudo nginx -t
+        # Restart Nginx: After ensuring the configuration is correct, restart Nginx:
+        sudo systemctl restart nginx
+     ```
+
