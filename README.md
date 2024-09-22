@@ -134,3 +134,9 @@
         sudo systemctl restart nginx
      ```
 
+
+### Jenkins login Page
+
+<img width="933" alt="image" src="https://github.com/user-attachments/assets/5d2860e5-795a-4504-8d17-1d517b0336e7">
+
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/0fe9c871-c6db-49b0-9e86-c62ca8eddee0">
