@@ -1,7 +1,7 @@
 ### Jenkins_Install_and_Url_creation 
 
 #### Installation of Openjdk
-
+    -  Install Openjdk using the following command
     ```bash
         sudo apt update
         sudo apt install fontconfig openjdk-17-jre
