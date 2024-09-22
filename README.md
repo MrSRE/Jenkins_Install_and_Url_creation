@@ -35,5 +35,22 @@
         sudo apt-get install jenkins
      ```
 
+### Start Jenkins
+ 
+**You can enable the Jenkins service to start at boot with the command:**
+   - enable Jenkins :
+     ```bash
+      sudo systemctl enable jenkins
+     ```
 
+**You can start the Jenkins service with the command:**
+   - start Jenkins :
+     ```bash
+      sudo systemctl start jenkins
+     ```
 
+**You can check the status of the Jenkins service using the command:**
+   - status check Jenkins :
+     ```bash
+      sudo systemctl status jenkins
+     ```
